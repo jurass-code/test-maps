@@ -17,7 +17,17 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop leaflet-map-app",
+    "pm2:restart": "pm2 restart leaflet-map-app",
+    "pm2:delete": "pm2 delete leaflet-map-app",
+    "pm2:logs": "pm2 logs leaflet-map-app",
+    "pm2:status": "pm2 status",
+    "pm2:monit": "pm2 monit",
+    "pm2:dev": "pm2 start ecosystem.config.js --env development",
+    "pm2:prod": "pm2 start ecosystem.config.js --env production",
+    "serve": "pm2 serve build 3000 --spa"
   },
   "eslintConfig": {
     "extends": [
