@@ -1,38 +1,381 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    text-align: center;
+    font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    padding: 20px;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.App-link {
-  color: #61dafb;
+.App-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-header p {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.controls-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.layer-controls h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.layer-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.layer-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: #f0f0f0;
+    color: #555;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.layer-buttons button:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.layer-buttons button.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.selected-region {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.selected-region h3 {
+    margin: 0 0 0.5rem 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.selected-region p {
+    margin: 0;
+    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.map-container {
+    background: white;
+    border-radius: 12px;
+    padding: 1px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    position: relative;
+}
+
+.map-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px 12px 0 0;
+}
+
+.svg-map-container {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.svg-map-container h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.svg-map-container p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.info-panel {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.info-panel h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.info-panel ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-panel li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 1.1rem;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.info-panel li:last-child {
+    border-bottom: none;
+}
+
+.info-panel li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #667eea;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.App-header,
+.controls-panel,
+.map-container,
+.svg-map-container,
+.info-panel {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.controls-panel {
+    animation-delay: 0.1s;
+}
+
+.map-container {
+    animation-delay: 0.2s;
+}
+
+.svg-map-container {
+    animation-delay: 0.3s;
+}
+
+.info-panel {
+    animation-delay: 0.4s;
+}
+
+/* Leaflet стили */
+.leaflet-container {
+    border-radius: 12px;
+    font-family: inherit;
+}
+
+.leaflet-popup-content {
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+.leaflet-popup-tip {
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Легенда карты */
+.leaflet-control-attribution {
+    font-size: 11px !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    border-radius: 4px !important;
+    padding: 2px 6px !important;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .App {
+        padding: 10px;
+    }
+
+    .App-header {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .App-header h1 {
+        font-size: 2rem;
+    }
+
+    .App-header p {
+        font-size: 1rem;
+    }
+
+    .controls-panel {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .layer-buttons {
+        flex-direction: column;
+    }
+
+    .layer-buttons button {
+        width: 100%;
+    }
+
+    .map-container {
+        margin-bottom: 1rem;
+    }
+
+    .svg-map-container {
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .svg-map-container h2 {
+        font-size: 1.3rem;
+    }
+
+    .info-panel {
+        padding: 1.5rem;
+    }
+
+    .info-panel h3 {
+        font-size: 1.3rem;
+    }
+
+    .info-panel li {
+        font-size: 1rem;
+        padding: 0.5rem 0 0.5rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .App-header h1 {
+        font-size: 1.7rem;
+    }
+
+    .controls-panel {
+        padding: 0.75rem;
+    }
+
+    .layer-controls h3 {
+        font-size: 1.1rem;
+    }
+
+    .layer-buttons button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+
+    .selected-region {
+        padding: 0.75rem;
+    }
+
+    .selected-region h3 {
+        font-size: 1rem;
+    }
+
+    .svg-map-container {
+        padding: 1rem;
+    }
+
+    .svg-map-container h2 {
+        font-size: 1.2rem;
+    }
+
+    .info-panel {
+        padding: 1rem;
+    }
+
+    .info-panel li {
+        font-size: 0.95rem;
+    }
+}
+
+/* Стили для всплывающих окон Leaflet */
+.leaflet-popup-content strong {
+    color: #667eea;
+}
+
+.leaflet-popup-content hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 8px 0;
+}
+
+.leaflet-popup-content span {
+    display: block;
+    margin-top: 4px;
+}
+
+/* Стили для маркеров */
+.leaflet-marker-icon {
+    transition: transform 0.2s ease;
+}
+
+.leaflet-marker-icon:hover {
+    transform: scale(1.1);
 }
