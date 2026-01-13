@@ -1,0 +1,236 @@
+.russia-svg-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.map-container {
+  width: 100%;
+  overflow: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background: #f8f9fa;
+  padding: 10px;
+}
+
+.russia-map {
+  display: block;
+  margin: 0 auto;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.region-path {
+  transition: all 0.3s ease;
+}
+
+.region-path:hover {
+  filter: brightness(1.1);
+  transform: scale(1.01);
+}
+
+.cities text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.cities circle {
+  transition: all 0.2s ease;
+}
+
+.cities circle:hover {
+  r: 6;
+  fill: #ff6b6b;
+}
+
+.legend {
+  pointer-events: none;
+}
+
+.legend text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.map-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 100%;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.region-info {
+  flex: 1;
+  min-width: 250px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.region-info h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.region-color {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 3px solid white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.region-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.map-instructions {
+  flex: 1;
+  min-width: 250px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.map-instructions h4 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.map-instructions ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.map-instructions li {
+  padding: 8px 0;
+  color: #555;
+  font-size: 0.95rem;
+  position: relative;
+  padding-left: 25px;
+}
+
+.map-instructions li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Анимации */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+  }
+}
+
+.region-info {
+  animation: pulse 2s infinite;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .russia-svg-map {
+    padding: 15px;
+  }
+
+  .russia-map {
+    width: 100%;
+    height: auto;
+  }
+
+  .map-controls {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .region-info,
+  .map-instructions {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .russia-svg-map {
+    padding: 10px;
+  }
+
+  .map-container {
+    padding: 5px;
+  }
+
+  .region-info h3 {
+    font-size: 1.3rem;
+  }
+
+  .map-instructions h4 {
+    font-size: 1.1rem;
+  }
+
+  .map-instructions li {
+    font-size: 0.9rem;
+  }
+}
+
+/* Эффекты при наведении на всю карту */
+.russia-map:hover .cities circle {
+  animation: bounce 0.5s ease infinite alternate;
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-2px);
+  }
+}
+
+/* Стили для выбранного региона */
+.region-path.selected {
+  animation: selectedPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes selectedPulse {
+  0% {
+    stroke-width: 3;
+    stroke-opacity: 1;
+  }
+  50% {
+    stroke-width: 5;
+    stroke-opacity: 0.7;
+  }
+  100% {
+    stroke-width: 3;
+    stroke-opacity: 1;
+  }
+}
