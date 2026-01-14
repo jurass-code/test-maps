@@ -113,12 +113,14 @@ function App() {
           )}
 
           {/* Регионы России */}
-          <GeoJSON
-            key="russia-regions"
-            data={russiaRegionsGeoJson}
-            style={regionStyle}
-            onEachFeature={onEachFeature}
-          />
+          {activeLayer !== 'svg' &&
+            <GeoJSON
+              key="russia-regions"
+              data={russiaRegionsGeoJson}
+              style={regionStyle}
+              onEachFeature={onEachFeature}
+            />
+          }
 
           {/* Маркеры для крупных городов */}
           {majorCities.map((city, index) => (
