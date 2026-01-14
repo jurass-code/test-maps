@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, GeoJSON, Marker, Popup, ImageOverlay } from 'r
 import { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './App.css';
-import RussiaSvgMap from './components/RussiaSvgMap';
 
 // Иконка для маркера
 const customIcon = new Icon({
@@ -40,6 +39,12 @@ function App() {
               OpenStreetMap
             </button>
             <button
+              className={activeLayer === 'ya' ? 'active' : ''}
+              onClick={() => setActiveLayer('ya')}
+            >
+              яндекс мапа
+            </button>
+            <button
               className={activeLayer === 'topo' ? 'active' : ''}
               onClick={() => setActiveLayer('topo')}
             >
@@ -68,12 +73,19 @@ function App() {
           zoom={3}
           style={{ height: '600px', width: '100%' }}
           scrollWheelZoom={true}
+          attributionControl={false}
         >
           {/* Базовый слой OpenStreetMap */}
           {activeLayer === 'osm' && (
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            />
+          )}
+
+          {activeLayer === 'ya' && (
+            <TileLayer
+              url={"https://tiles.api-maps.yandex.ru/v1/tiles/?apikey=17cb2443-6b6f-491e-a28d-2660bd465675&l=map&x={x}&y={y}&z={z}&scale=1&lang=ru_RU&maptype=map"}
             />
           )}
 
