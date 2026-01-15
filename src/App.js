@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, GeoJSON, Marker, Popup, ImageOverlay, useMap } from 'react-leaflet';
 import L, { Icon } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -64,8 +64,13 @@ L.Map.SmoothWheelZoom = L.Handler.extend({
 
   _onWheeling: function (e) {
     var map = this._map;
-
-    this._goalZoom = this._goalZoom + L.DomEvent.getWheelDelta(e) * 0.003 * map.options.smoothSensitivity;
+    let smoothSensitivity = map.options.smoothSensitivity
+    let coef = 0.003
+    if (Math.abs(e.deltaY) < 80) {
+      coef = 0.03
+    }
+    this._goalZoom = this._goalZoom + L.DomEvent.getWheelDelta(e) * coef * smoothSensitivity;
+    // this._goalZoom = this._goalZoom + L.DomEvent.getWheelDelta(e) * 0.03 * smoothSensitivity;
     if (this._goalZoom < map.getMinZoom() || this._goalZoom > map.getMaxZoom()) {
       this._goalZoom = map._limitZoom(this._goalZoom);
     }
@@ -136,11 +141,10 @@ function SmoothZoom() {
   useEffect(() => {
     map.options.scrollWheelZoom = false;
     map.options.smoothWheelZoom = true;
-    map.options.smoothSensitivity = 1.5;
+    map.options.smoothSensitivity = 1.3;
   }, []);
   return null;
 }
-
 function App() {
   const [activeLayer, setActiveLayer] = useState('osm'); // 'osm', 'topo', 'svg'
 
