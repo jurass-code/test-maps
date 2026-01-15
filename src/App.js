@@ -124,6 +124,8 @@ L.Map.SmoothWheelZoom = L.Handler.extend({
 
 L.Map.addInitHook('addHandler', 'smoothWheelZoom', L.Map.SmoothWheelZoom);
 
+const canvasRenderer = L.canvas({ padding: 0.5 });
+
 
 // Иконка для маркера
 const customIcon = new Icon({
@@ -236,6 +238,7 @@ function App() {
               data={russiaRegionsGeoJson}
               style={regionStyle}
               onEachFeature={onEachFeature}
+              renderer={canvasRenderer}
             />
           }
 
